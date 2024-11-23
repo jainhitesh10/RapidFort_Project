@@ -32,7 +32,7 @@ This application provides two core features:
 ## **Getting Started**
 
 ### **Prerequisites**
-- Node.js (v14 or higher)
+- Node.js (v18 or higher)
 - npm (Node Package Manager)
 
 ### **Run Locally**
@@ -69,9 +69,10 @@ This application provides two core features:
 |   |-- protectService.js
 |-- views/
 |   |-- convert.ejs
+|   |-- index.ejs
 |   |-- protect.ejs
 |-- public/
-|   |-- css/
+|   |-- styles.css
 |-- app.js
 |-- package.json
 ```
@@ -110,12 +111,9 @@ We welcome all contributions to improve this application.
 
 ---
 
-## **License**
-This project is licensed under the MIT License.  
-
----
-
 ## **Contact**
 For issues or suggestions, please open an issue on the repository or contact the developer directly.
 
 **Live Demo**: [https://rapidfortproject-rjduk8ui.b4a.run/](https://rapidfortproject-rjduk8ui.b4a.run/)
+
+**Linkedin**: [https://www.linkedin.com/in/hitesh-jain-9247421a0/](https://www.linkedin.com/in/hitesh-jain-9247421a0/)
