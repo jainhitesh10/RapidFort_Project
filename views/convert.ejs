@@ -2,25 +2,30 @@
 <html>
 <head>
   <title>Convert DOCX to PDF</title>
+  <link rel="stylesheet" href="/styles.css">
 </head>
 <body>
-  <h1>Convert DOCX to PDF</h1>
+  <div class="container">
+    <h1>Convert DOCX to PDF</h1>
 
-  <!-- Upload Form -->
-  <form action="/convert" method="POST" enctype="multipart/form-data">
-    <input type="file" name="file" accept=".docx" required />
-    <button type="submit">Convert</button>
-  </form>
+    <!-- Upload Form -->
+    <form action="/convert" method="POST" enctype="multipart/form-data" class="form">
+      <input type="file" name="file" accept=".docx" required class="input-file"/>
+      <button type="submit" class="btn">Convert</button>
+    </form>
 
-  <!-- Display Metadata and Download Link -->
-  <% if (metadata) { %>
-    <h2>File Metadata</h2>
-    <p><b>File Name:</b> <%= metadata.originalName %></p>
-    <p><b>File Size:</b> <%= metadata.size %></p>
-    <p><b>Uploaded At:</b> <%= metadata.uploadTime %></p>
+    <!-- Display Metadata and Download Link -->
+    <% if (metadata) { %>
+      <div class="metadata">
+        <h2>File Metadata</h2>
+        <p><b>File Name:</b> <%= metadata.originalName %></p>
+        <p><b>File Size:</b> <%= metadata.size %></p>
+        <p><b>Uploaded At:</b> <%= metadata.uploadTime %></p>
 
-    <h2>Conversion Completed</h2>
-    <a href="/convert/download">Download PDF</a>
-  <% } %>
+        <h2>Conversion Completed</h2>
+        <a href="/convert/download" class="btn">Download PDF</a>
+      </div>
+    <% } %>
+  </div>
 </body>
 </html>
