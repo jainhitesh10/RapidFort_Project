@@ -7,29 +7,39 @@ const convertPage = (req, res) => {
 };
 
 const convertDocxToPdf = async (req, res) => {
-  const file = req.file;
+  try {
+    const file = req.file;
 
-  if (!file || !file.mimetype.includes('wordprocessingml.document')) {
-    return res.status(400).send('Please upload a valid .docx file.');
+    if (!file || !file.mimetype.includes('wordprocessingml.document')) {
+      return res.status(400).send('Please upload a valid .docx file.');
+    }
+
+    // Extract metadata
+    convertedFileMetadata = ConvertService.getFileMetadata(file);
+
+    // Convert DOCX to PDF
+    const pdfPath = await ConvertService.convertDocxToPdf(file);
+
+    // Update metadata with PDF path
+    convertedFileMetadata.pdfPath = pdfPath;
+
+    res.render('convert', { metadata: convertedFileMetadata, pdfPath });
+  } catch (error) {
+    console.error('Error in convertDocxToPdf:', error.message);
+    res.status(500).send('An error occurred during conversion. Please try again.');
   }
-
-  // Extract metadata
-  convertedFileMetadata = ConvertService.getFileMetadata(file);
-
-  // Convert DOCX to PDF
-  const pdfPath = await ConvertService.convertDocxToPdf(file);
-
-  // Update metadata with PDF path
-  convertedFileMetadata.pdfPath = pdfPath;
-
-  res.render('convert', { metadata: convertedFileMetadata, pdfPath });
 };
 
 const downloadPdf = (req, res) => {
-  if (!convertedFileMetadata.pdfPath) {
-    return res.status(404).send('No converted file found.');
+  try {
+    if (!convertedFileMetadata.pdfPath) {
+      return res.status(404).send('No converted file found.');
+    }
+    res.download(convertedFileMetadata.pdfPath);
+  } catch (error) {
+    console.error('Error in downloadPdf:', error.message);
+    res.status(500).send('An error occurred while downloading the file. Please try again.');
   }
-  res.download(convertedFileMetadata.pdfPath);
 };
 
 module.exports = { convertPage, convertDocxToPdf, downloadPdf };

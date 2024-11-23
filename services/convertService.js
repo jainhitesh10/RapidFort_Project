@@ -17,23 +17,28 @@ const getFileMetadata = (file) => {
 };
 
 const convertDocxToPdf = async (file) => {
-  const docxPath = file.path;
-  const pdfPath = path.join(convertedDir, file.originalname.replace('.docx', '.pdf'));
+  try {
+    const docxPath = file.path;
+    const pdfPath = path.join(convertedDir, file.originalname.replace('.docx', '.pdf'));
 
-  // Extract text from .docx
-  const docxContent = await fs.promises.readFile(docxPath);
-  const { value: text } = await mammoth.extractRawText({ buffer: docxContent });
+    // Extract text from .docx
+    const docxContent = await fs.promises.readFile(docxPath);
+    const { value: text } = await mammoth.extractRawText({ buffer: docxContent });
 
-  // Create PDF
-  const pdfDoc = await PDFDocument.create();
-  const page = pdfDoc.addPage();
-  page.drawText(text, { x: 50, y: page.getHeight() - 50, size: 12 });
+    // Create PDF
+    const pdfDoc = await PDFDocument.create();
+    const page = pdfDoc.addPage();
+    page.drawText(text, { x: 50, y: page.getHeight() - 50, size: 12 });
 
-  // Save PDF
-  const pdfBytes = await pdfDoc.save();
-  await fs.promises.writeFile(pdfPath, pdfBytes);
+    // Save PDF
+    const pdfBytes = await pdfDoc.save();
+    await fs.promises.writeFile(pdfPath, pdfBytes);
 
-  return pdfPath;
+    return pdfPath;
+  } catch (error) {
+    console.error('Error in convertDocxToPdf:', error.message);
+    throw new Error('Failed to convert DOCX to PDF.');
+  }
 };
 
 module.exports = { getFileMetadata, convertDocxToPdf };
