@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: doc-to-pdf-app
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: doc-to-pdf
+  template:
+    metadata:
+      labels:
+        app: doc-to-pdf
+    spec:
+      containers:
+      - name: app
+        image: hiteshjain1001/rapidfort:v1.0
+        ports:
+        - containerPort: 3000
