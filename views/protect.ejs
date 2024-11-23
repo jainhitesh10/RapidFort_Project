@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Password Protect PDF</title>
+</head>
+<body>
+  <h1>Password Protect PDF</h1>
+
+  <!-- Upload Form -->
+  <form action="/protect" method="POST" enctype="multipart/form-data">
+    <input type="file" name="file" accept=".pdf" required />
+    <input type="password" name="password" placeholder="Enter password" required />
+    <button type="submit">Protect PDF</button>
+  </form>
+
+  <!-- Download Protected PDF -->
+  <% if (protectedFilePath) { %>
+    <h2>Password Protection Applied</h2>
+    <a href="/protect/download">Download Protected PDF</a>
+  <% } %>
+</body>
+</html>
